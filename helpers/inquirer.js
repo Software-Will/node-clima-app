@@ -98,47 +98,9 @@ const listarLugares = async (lugares = []) => {
     // console.log(choices); //Obtenemos los datos para poder seleccionarlas
 }
 
-const confirmar = async (message) => {
-    const question = [ //confirm regresa un valor boolean
-        {
-            type: 'confirm',
-            name: 'ok',
-            message
-        }
-    ];
-    const { ok } = await inquirer.prompt(question);
-    return ok;
-}
-
-const mostrarListadoCheckList = async (tareas = []) => {
-
-    const choices = tareas.map((tarea, i) => {
-        const iAux = `${(i + 1) + '.'}`.green;
-        return {
-            value: tarea.id,
-            name: `${iAux} ${tarea.desc}`,
-            checked: (tarea.completadoEn) ? true : false
-        };
-    });
-
-    const pregunta = [{
-        type: 'checkbox', //Devuelve un arreglo con todos los objetos a eliminar
-        name: 'ids',
-        message: 'Selecciones',
-        choices
-    }];
-
-    const { ids } = await inquirer.prompt(pregunta);
-    return ids;
-    // console.log(choices); //Obtenemos los datos para poder seleccionarlas
-}
-
-
 module.exports = {
     inquirerMenu,
     pausa,
     leerInput,
-    listarLugares,
-    confirmar,
-    mostrarListadoCheckList
+    listarLugares
 }
