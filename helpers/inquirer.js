@@ -70,9 +70,37 @@ const leerInput = async (message) => {
     return desc;
 }
 
-const listarLugares = async (lugares = []) => {
+// const listarLugares = async (lugares = []) => {
 
-    const choices = lugares.map((lugar, i) => { //opciones console
+//     const choices = lugares.map((lugar, i) => { //opciones console
+//         const iAux = `${(i + 1) + '.'}`.green;
+//         return {
+//             value: lugar.id,
+//             name: `${iAux} ${lugar.nombre}`
+//         };
+//     });
+
+//     choices.unshift({
+//         value: '0',
+//         name: `${'0.'.green} Cancelar`
+//     });
+
+
+//     const preguntas = [{
+//         type: 'list',
+//         name: 'id',
+//         message: 'Seleccione lugar:',
+//         choices
+//     }];
+
+//     const { id } = await inquirer.prompt(preguntas);
+//     return id;
+//     // console.log(choices); //Obtenemos los datos para poder seleccionarlas
+// }
+
+
+const listarLugares = async (lugares = []) => {
+    const choices = lugares.map((lugar, i) => {
         const iAux = `${(i + 1) + '.'}`.green;
         return {
             value: lugar.id,
@@ -85,7 +113,6 @@ const listarLugares = async (lugares = []) => {
         name: `${'0.'.green} Cancelar`
     });
 
-
     const preguntas = [{
         type: 'list',
         name: 'id',
@@ -95,7 +122,6 @@ const listarLugares = async (lugares = []) => {
 
     const { id } = await inquirer.prompt(preguntas);
     return id;
-    // console.log(choices); //Obtenemos los datos para poder seleccionarlas
 }
 
 module.exports = {

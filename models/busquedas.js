@@ -32,7 +32,7 @@ class Busquedas {
 
             const resp = await instance.get();
             //console.log(resp.data.features); // resp.data
-
+          
             return resp.data.features.map(lugar => ({
                 id: lugar.id,
                 nombre: lugar.place_name,
@@ -122,6 +122,38 @@ class Busquedas {
         const data = JSON.parse(info);
 
         this.historial = data.historial; // Asignamos la data de la bd al array historial
+    }
+
+    async climaLugarPorNombre(nombre) {
+        const lugares = await this.ciudad(nombre);
+        if (lugares.length === 0) {
+            console.log(`No se encontró información para ${nombre}`);
+            return {};
+        }
+
+        const lugar = lugares[0];
+        const { log: lon, lat } = lugar;
+
+        try {
+            const instance = axios.create({
+                baseURL: `https://api.openweathermap.org/data/2.5/weather`,
+                params: { ...this.paramsOpenWeather, lat, lon }
+            });
+
+            const resp = await instance.get();
+            const { data } = resp;
+            const { weather, main } = data;
+
+            return {
+                desc: weather[0].description,
+                min: main.temp_min,
+                max: main.temp_max,
+                temp: main.temp
+            };
+        } catch (error) {
+            console.log(error.message);
+            return {};
+        }
     }
 
 }
